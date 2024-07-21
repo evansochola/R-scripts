@@ -1,0 +1,60 @@
+---
+title: "Data preparation"
+format: html
+editor: visual
+---
+
+## Imports
+
+```{r}
+# This clears all objects in "global environment"
+rm(list=ls())
+
+# clears the console area
+cat("\014")
+
+# Sets R random numbers to start at the same sequence
+set.seed(1234)
+
+install.packages("readr")
+install.packages("here")
+
+library(readr)
+library(here)
+```
+
+## Load Dataset
+
+```{r}
+Boston <- read_csv(here::here("data","raw","boston.csv"), show_col_types = FALSE)
+head(Boston)
+```
+
+## Splitting the Dataset
+
+Split the dataset so that one unique proportion is used to train the model ("train dataset") and one unique set to test the model ("test dataset").
+
+Randomise the dataset just in case it happens to be stored in some order that might impact the model building process; this is random sampling.
+
+```{r}
+rowsInDataFrame <- nrow(Boston)
+randomNumbers <- runif(rowsInDataFrame) # vector of uniform random numbers between [0.0, 1.0]
+randomIndexes <- order(randomNumbers) # creates a vector of 506 unique indexes
+```
+
+Use the unique random indexes to extract each row in the dataset in a random order:
+
+```{r}
+Boston <- Boston[randomIndexes,]
+
+# Using 70% of the dataset to train the model
+training_records <- round(nrow(Boston) * 70/100)
+```
+
+```{r}
+# train and test sets with a single predictor variable
+train_set <- Boston[1:training_records, c("lstat", "medv")]
+test_set <- Boston[-(1:training_records), c("lstat", "medv")]
+```
+
+## Simple Linear Regression Model
