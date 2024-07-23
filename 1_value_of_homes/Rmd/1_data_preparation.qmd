@@ -57,4 +57,18 @@ train_set <- Boston[1:training_records, c("lstat", "medv")]
 test_set <- Boston[-(1:training_records), c("lstat", "medv")]
 ```
 
-## Simple Linear Regression Model
+## Exploring and visualising datasets
+
+```{r}
+medv <-  train_set$medv
+lstat <- train_set$lstat
+
+print("Scatter plot two variables lstat and medv")
+plot(lstat, medv, main = "Points from Training Dataset",
+     ylab = "Median House Prices($)",
+     xlab = "Lower Status(%)")
+```
+
+This does not look very linear. But as we"ll be using a simple linear regression model, the more linear we make the data, the better chance it has of learning a good predicting model.
+
+The scatterplot does not tell us much about the relationship between the two variables. It would be easier to maybe spot a statistical shape.
