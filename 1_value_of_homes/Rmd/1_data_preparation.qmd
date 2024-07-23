@@ -72,3 +72,27 @@ plot(lstat, medv, main = "Points from Training Dataset",
 This does not look very linear. But as we"ll be using a simple linear regression model, the more linear we make the data, the better chance it has of learning a good predicting model.
 
 The scatterplot does not tell us much about the relationship between the two variables. It would be easier to maybe spot a statistical shape.
+
+If we order the predictor variable lstat and then plot again, we get a clearer picture of the relationship.
+
+```{r}
+print("Ordered plot of lstat")
+plot(sort(lstat, decreasing = TRUE),
+     main = "Distribution(Training Dataset)",
+     sub = "Ordered by predictor lstat",
+     xlab = "Record",
+     ylab = "Lower Status(%)")
+```
+
+This does not look very linear. Try a simple statistical "transform" to see if we can force it to be more linear.
+
+```{r}
+print("Ordered plot of lstat")
+plot(sort(log(lstat), decreasing = TRUE),
+     main = "Distribution(Training Dataset)",
+     sub = "Ordered by predictor lstat",
+     xlab = "Record",
+     ylab = "log Lower Status(%)")
+```
+
+As we're using a linear model, it is important that the variables that are used are pre-processed to be as linear as possible.
